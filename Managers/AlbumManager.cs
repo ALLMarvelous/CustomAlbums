@@ -7,11 +7,25 @@ namespace CustomAlbums.Managers;
 public static class AlbumManager
 {
     public const int InternalId = 999;
-    public const string SearchPath = "Custom_Albums";
-    public const string SearchPattern = "*.mdm";
+    
+    private const string SearchPath = "Custom_Albums";
+    private const string SearchPattern = "*.mdm";
 
     public static Dictionary<string, Album> LoadedAlbums { get; } = new();
-    private static readonly Logger _logger = new(nameof(AlbumManager));
+    private static readonly Logger Logger = new(nameof(AlbumManager));
+
+    public static string GetLanguage(string lang)
+    {
+        return lang switch
+        {
+            "English" => "Custom Albums",
+            "ChineseS" => "自定义",
+            "ChineseT" => "自定義",
+            "Korean" => "커스텀앨범",
+            "Japanese" => "カスタムアルバム",
+            _ => "Custom Albums"
+        };
+    }
 
     public static void LoadAlbums()
     {
@@ -30,7 +44,7 @@ public static class AlbumManager
             LoadAlbumFolder(folder);
         }
 
-        _logger.Success($"Loaded {LoadedAlbums.Count} albums from {SearchPath}.");
+        Logger.Success($"Loaded {LoadedAlbums.Count} albums from {SearchPath}.");
     }
 
     public static void LoadAlbumArchive(string path)
@@ -38,13 +52,13 @@ public static class AlbumManager
         var fileName = Path.GetFileNameWithoutExtension(path);
         if (LoadedAlbums.ContainsKey(fileName))
         {
-            _logger.Warning($"Key '{fileName}' present in LoadedAlbums, skipping load for {fileName}.");
+            Logger.Warning($"Key '{fileName}' present in LoadedAlbums, skipping load for {fileName}.");
         }
 
         var albumFile = new AlbumArchive(path);
         if (albumFile.Info == null)
         {
-            _logger.Warning($"Album archive '{fileName}' has no valid info, skipping load.");
+            Logger.Warning($"Album archive '{fileName}' has no valid info, skipping load.");
         }
 
         var album = new Album(albumFile);
@@ -57,14 +71,14 @@ public static class AlbumManager
         var folderName = Path.GetFileName(path);
         if (LoadedAlbums.ContainsKey(folderName))
         {
-            _logger.Warning($"Key '{folderName}' present in LoadedAlbums, skipping load for {folderName}.");
+            Logger.Warning($"Key '{folderName}' present in LoadedAlbums, skipping load for {folderName}.");
             return;
         }
 
         var albumFile = new AlbumFolder(path);
         if (albumFile.Info == null)
         {
-            _logger.Warning($"Album folder '{folderName}' has no valid info, skipping load.");
+            Logger.Warning($"Album folder '{folderName}' has no valid info, skipping load.");
             return;
         }
 

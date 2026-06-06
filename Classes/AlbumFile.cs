@@ -7,29 +7,27 @@ namespace CustomAlbums.Classes;
 public abstract class AlbumFile
 {
     public string Path { get; }
-    public IReadOnlyList<string> Files { get; }
+    protected IEnumerable<string> Files { get; private set; }
 
-    public AlbumInfo Info { get; }
-    public Sprite Cover { get; }
-    public AudioClip Music { get; }
-    public AudioClip Demo { get; }
+    public AlbumInfo Info { get; private set; }
+    public Sprite Cover { get; protected set; }
+    public AudioClip Music { get; protected set; }
+    public AudioClip Demo { get; protected set; }
 
-    public AlbumFile(string path)
+    protected AlbumFile(string path)
     {
-        Path = System.IO.Path.TrimEndingDirectorySeparator(path.Replace('\\', '/'));
+        Path = System.IO.Path.TrimEndingDirectorySeparator(path);
+    }
+
+    protected void Initialize()
+    {
         Files = GetFiles();
 
         using var infoStream = ReadFile("info.json");
         Info = JsonSerializer.Deserialize<AlbumInfo>(infoStream)
-            ?? throw new InvalidDataException("Invalid or missing info.json in album file.");
-
-        //using var coverStream = ReadFile("cover.png");
-        //var coverTexture = new Texture2D(2, 2, TextureFormat.ARGB32, false)
-        //{
-        //    wrapMode = TextureWrapMode.MirrorOnce
-        //};
+               ?? throw new InvalidDataException("Invalid or missing info.json in album file.");
     }
 
     public abstract MemoryStream ReadFile(string fileName);
-    internal abstract IReadOnlyList<string> GetFiles();
+    protected abstract IEnumerable<string> GetFiles();
 }

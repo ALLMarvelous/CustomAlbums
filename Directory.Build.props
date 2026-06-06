@@ -51,11 +51,6 @@
 			<Private>false</Private>
 			<HintPath>$(MelonAssemblies)\UnityEngine.ImageConversionModule.dll</HintPath>
 		</Reference>
-		<Reference Include="UnityEngine.ImageConversionModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-			<SpecificVersion>false</SpecificVersion>
-			<Private>false</Private>
-			<HintPath>$(MelonAssemblies)\UnityEngine.ImageConversionModule.dll</HintPath>
-		</Reference>
 		<Reference Include="Il2Cppmscorlib, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
 			<SpecificVersion>false</SpecificVersion>
 			<Private>false</Private>
@@ -70,6 +65,16 @@
 			<SpecificVersion>false</SpecificVersion>
 			<Private>false</Private>
 			<HintPath>$(MelonAssemblies)\Il2CppNVorbis.dll</HintPath>
+		</Reference>
+		<Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+			<SpecificVersion>false</SpecificVersion>
+			<Private>false</Private>
+			<HintPath>$(MelonAssemblies)\Assembly-CSharp.dll</HintPath>
+		</Reference>
+		<Reference Include="Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+			<SpecificVersion>false</SpecificVersion>
+			<Private>false</Private>
+			<HintPath>$(MelonAssemblies)\Assembly-CSharp-firstpass.dll</HintPath>
 		</Reference>
 	</ItemGroup>
 </Project>

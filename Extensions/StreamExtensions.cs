@@ -31,7 +31,9 @@ internal static class StreamExtensions
             ms = stream.ToMemoryStream();
         }
 
-        var hash = MD5.Create().ComputeHash(ms.ToArray());
-        return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
+        using var md5 = MD5.Create();
+
+        var hash = md5.ComputeHash(ms.ToArray());
+        return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant(); ;
     }
 }
